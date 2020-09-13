@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles/less-sample.css"],"names":[],"mappings":"AAAA,aACE,MAAO,KAET,yBACE,MAAO","file":"less-sample.min.css","sourcesContent":[".less-parent {\n  color: #000000;\n}\n.less-parent .less-child {\n  color: #cccccc;\n}\n"]}
