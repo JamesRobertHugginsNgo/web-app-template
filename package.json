@@ -21,10 +21,9 @@
     "del": "^5.1.0",
     "eslint": "^7.9.0",
     "gulp": "^4.0.2",
+    "gulp-connect": "^5.7.0",
+    "gulp-preprocess": "^3.0.3",
     "path": "^0.12.7"
   },
-  "dependencies": {
-    "gulp-connect": "^5.7.0",
-    "gulp-preprocess": "^3.0.3"
-  }
+  "dependencies": {}
 }
