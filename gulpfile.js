@@ -20,6 +20,7 @@ function delDist() {
 
 const preprocessContext = {};
 
+// Build HTML
 const buildHtmlSrc = path.join(__dirname, './src/**/*.html');
 function buildHtml() {
 	return gulp.src(buildHtmlSrc, { since: gulp.lastRun(buildHtml) })
@@ -44,6 +45,7 @@ function buildCssCommon(stream, dist) {
 		.pipe(gulpConnect.reload());
 }
 
+// Build CSS
 const buildCssSrc = path.join(__dirname, './src/**/*.css');
 function buildCss() {
 	const stream = gulp.src(buildCssSrc, { since: gulp.lastRun(buildCss) })
@@ -56,6 +58,7 @@ function watchCss() {
 	return Promise.resolve();
 }
 
+// Build SASS
 const buildSassSrc = path.join(__dirname, './src/**/*.scss');
 function buildSass() {
 	const stream = gulp.src(buildSassSrc, { since: gulp.lastRun(buildSass) })
