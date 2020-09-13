@@ -1,7 +1,8 @@
 "use strict";
 
-var foo = function foo(bar) {
-  console.log(bar); // eslint-disable-line no-console
-};
+/* global $ */
 
-foo('Hello World');
+/* global foo */
+$(function () {
+  foo('Hello World');
+});
