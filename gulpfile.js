@@ -8,6 +8,7 @@ const gulpCleanCss = require('gulp-clean-css');
 const gulpConnect = require('gulp-connect');
 const gulpPreprocess = require('gulp-preprocess');
 const gulpSass = require('gulp-sass');
+const gulpLess = require('gulp-less');
 const gulpRename = require('gulp-rename');
 const gulpSourcemaps = require('gulp-sourcemaps');
 
@@ -72,10 +73,24 @@ function watchSass() {
 	return Promise.resolve();
 }
 
-const build = gulp.parallel(buildHtml, buildCss, buildSass);
+// Build Less
+const buildLessSrc = path.join(__dirname, './src/**/*.less');
+function buildLess() {
+	const stream = gulp.src(buildLessSrc, { since: gulp.lastRun(buildLess) })
+		.pipe(gulpPreprocess({ context: preprocessContext }))
+		.pipe(gulpLess());
+
+	return buildCssCommon(stream, dist);
+}
+function watchLess() {
+	gulp.watch(buildLessSrc, buildLess);
+	return Promise.resolve();
+}
+
+const build = gulp.parallel(buildHtml, buildCss, buildSass, buildLess);
 module.exports.build = gulp.series(delDist, build);
 
-const watch = gulp.parallel(watchHtml, watchCss, watchSass);
+const watch = gulp.parallel(watchHtml, watchCss, watchSass, watchLess);
 module.exports.watch = gulp.series(delDist, build, watch);
 
 function serve() {
