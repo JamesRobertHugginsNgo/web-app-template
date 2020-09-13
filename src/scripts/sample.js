@@ -1,5 +1,10 @@
-const foo = (bar) => {
-	console.log(bar); // eslint-disable-line no-console
-};
+/* global $ */
 
-foo('Hello World');
+/* @exclude */
+/* global foo */
+/* @endexclude */
+/* @exec renderImport('foo', './module-sample.js') */
+
+$(function() {
+	foo('Hello World');
+});

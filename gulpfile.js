@@ -91,27 +91,42 @@ function watchLess() {
 }
 
 const buildJsSrc = path.join(__dirname, './src/**/*.js');
-function buildJsStart() {
-	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildJs) })
-		.pipe(gulpPreprocess({ context: preprocessContext }))
-		.pipe(gulpEsLint())
-		.pipe(gulpEsLint.format())
-		.pipe(gulpEsLint.failAfterError());
-}
-function buildJsEnd() {
-	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildJs) })
-		.pipe(gulpConnect.reload());
-}
+const buildJsScriptPreprocessContext = Object.assign({
+	renderExport(...args) {
+		return `/* exported ${args.join(' ')} */`;
+	},
+	renderImport(...args) {
+		const lastIndex = args.length - 1;
+		return `/* global ${args.filter((value, index) => index < lastIndex).join(' ')} */`;
+	}
+}, preprocessContext);
+const buildEs6ModulePreprocessContext = Object.assign({
+	renderExport(...args) {
+		return `export { ${args.join(', ')} };`;
+	},
+	renderImport(...args) {
+		const lastIndex = args.length - 1;
+		return `import { ${args.filter((value, index) => index < lastIndex).join(', ')} } from '${args[lastIndex]}';`;
+	}
+}, preprocessContext);
 
 // Build ES6
 function buildEs6() {
 	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildEs6) })
+		.pipe(gulpPreprocess({ context: buildJsScriptPreprocessContext }))
+		.pipe(gulpEsLint())
+		.pipe(gulpEsLint.format())
+		.pipe(gulpEsLint.failAfterError())
 		.pipe(gulp.dest(dist));
 }
 
 // Build ES5
 function buildEs5() {
 	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildEs5) })
+		.pipe(gulpPreprocess({ context: buildJsScriptPreprocessContext }))
+		.pipe(gulpEsLint())
+		.pipe(gulpEsLint.format())
+		.pipe(gulpEsLint.failAfterError())
 		.pipe(gulpBabel())
 		.pipe(gulpRename(path => path.basename += '.es5'))
 		.pipe(gulp.dest(dist))
@@ -122,7 +137,23 @@ function buildEs5() {
 		.pipe(gulp.dest(dist));
 }
 
-const buildJs = gulp.series(buildJsStart, gulp.parallel(buildEs6, buildEs5), buildJsEnd);
+// Build ES6 Module
+function buildEs6Module() {
+	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildEs6Module) })
+		.pipe(gulpPreprocess({ context: buildEs6ModulePreprocessContext }))
+		.pipe(gulpEsLint({ parserOptions: { sourceType: 'module' } }))
+		.pipe(gulpEsLint.format())
+		.pipe(gulpEsLint.failAfterError())
+		.pipe(gulpRename(path => path.extname = '.mjs'))
+		.pipe(gulp.dest(dist));
+}
+
+function buildJsEnd() {
+	return gulp.src(buildJsSrc, { read: false, since: gulp.lastRun(buildJs) })
+		.pipe(gulpConnect.reload());
+}
+
+const buildJs = gulp.series(gulp.parallel(buildEs6, buildEs5, buildEs6Module), buildJsEnd);
 
 function watchJs() {
 	gulp.watch(buildJsSrc, buildJs);
