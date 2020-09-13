@@ -4,6 +4,7 @@ const nodeSass = require('node-sass');
 const path = require('path');
 
 const gulpAutoprefixer = require('gulp-autoprefixer');
+const gulpBabel = require('gulp-babel');
 const gulpCleanCss = require('gulp-clean-css');
 const gulpConnect = require('gulp-connect');
 const gulpEsLint = require('gulp-eslint');
@@ -12,6 +13,7 @@ const gulpSass = require('gulp-sass');
 const gulpLess = require('gulp-less');
 const gulpRename = require('gulp-rename');
 const gulpSourcemaps = require('gulp-sourcemaps');
+const gulpUglify = require('gulp-uglify');
 
 gulpSass.compiler = nodeSass;
 
@@ -89,30 +91,47 @@ function watchLess() {
 }
 
 const buildJsSrc = path.join(__dirname, './src/**/*.js');
-function buildJsEslint() {
-	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildJsEslint) })
+function buildJsStart() {
+	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildJs) })
 		.pipe(gulpPreprocess({ context: preprocessContext }))
 		.pipe(gulpEsLint())
 		.pipe(gulpEsLint.format())
 		.pipe(gulpEsLint.failAfterError());
 }
+function buildJsEnd() {
+	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildJs) })
+		.pipe(gulpConnect.reload());
+}
 
 // Build ES6
 function buildEs6() {
 	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildEs6) })
-		.pipe(gulp.dest(dist))
-		.pipe(gulpConnect.reload());
+		.pipe(gulp.dest(dist));
 }
-function watchEs6() {
-	gulp.watch(buildJsSrc, gulp.series(buildJsEslint, buildEs6));
+
+// Build ES5
+function buildEs5() {
+	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildEs5) })
+		.pipe(gulpBabel())
+		.pipe(gulpRename(path => path.basename += '.es5'))
+		.pipe(gulp.dest(dist))
+		.pipe(gulpSourcemaps.init())
+		.pipe(gulpUglify())
+		.pipe(gulpRename(path => path.basename += '.min'))
+		.pipe(gulpSourcemaps.write('./'))
+		.pipe(gulp.dest(dist));
+}
+
+const buildJs = gulp.series(buildJsStart, gulp.parallel(buildEs6, buildEs5), buildJsEnd);
+
+function watchJs() {
+	gulp.watch(buildJsSrc, buildJs);
 	return Promise.resolve();
 }
 
-const buildJs = gulp.series(buildJsEslint, buildEs6);
 const build = gulp.parallel(buildHtml, buildCss, buildSass, buildLess, buildJs);
 module.exports.build = gulp.series(delDist, build);
 
-const watchJs = gulp.parallel(watchEs6);
 const watch = gulp.parallel(watchHtml, watchCss, watchSass, watchLess, watchJs);
 module.exports.watch = gulp.series(delDist, build, watch);
 
