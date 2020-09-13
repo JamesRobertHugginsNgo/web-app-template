@@ -6,6 +6,7 @@ const path = require('path');
 const gulpAutoprefixer = require('gulp-autoprefixer');
 const gulpCleanCss = require('gulp-clean-css');
 const gulpConnect = require('gulp-connect');
+const gulpEsLint = require('gulp-eslint');
 const gulpPreprocess = require('gulp-preprocess');
 const gulpSass = require('gulp-sass');
 const gulpLess = require('gulp-less');
@@ -87,10 +88,32 @@ function watchLess() {
 	return Promise.resolve();
 }
 
-const build = gulp.parallel(buildHtml, buildCss, buildSass, buildLess);
+const buildJsSrc = path.join(__dirname, './src/**/*.js');
+function buildJsEslint() {
+	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildJsEslint) })
+		.pipe(gulpPreprocess({ context: preprocessContext }))
+		.pipe(gulpEsLint())
+		.pipe(gulpEsLint.format())
+		.pipe(gulpEsLint.failAfterError());
+}
+
+// Build ES6
+function buildEs6() {
+	return gulp.src(buildJsSrc, { since: gulp.lastRun(buildEs6) })
+		.pipe(gulp.dest(dist))
+		.pipe(gulpConnect.reload());
+}
+function watchEs6() {
+	gulp.watch(buildJsSrc, gulp.series(buildJsEslint, buildEs6));
+	return Promise.resolve();
+}
+
+const buildJs = gulp.series(buildJsEslint, buildEs6);
+const build = gulp.parallel(buildHtml, buildCss, buildSass, buildLess, buildJs);
 module.exports.build = gulp.series(delDist, build);
 
-const watch = gulp.parallel(watchHtml, watchCss, watchSass, watchLess);
+const watchJs = gulp.parallel(watchEs6);
+const watch = gulp.parallel(watchHtml, watchCss, watchSass, watchLess, watchJs);
 module.exports.watch = gulp.series(delDist, build, watch);
 
 function serve() {
