@@ -1,4 +1,4 @@
-# web-app-template v1.0.0
+# web-app-template v1.1.1
 Template for web app development.
 
 ## devDependencies
