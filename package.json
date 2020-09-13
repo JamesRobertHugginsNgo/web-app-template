@@ -1,0 +1,26 @@
+{
+  "name": "web-app-template",
+  "version": "1.0.0",
+  "description": "Template for web app development.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JamesRobertHugginsNgo/web-app-template.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JamesRobertHugginsNgo/web-app-template/issues"
+  },
+  "homepage": "https://github.com/JamesRobertHugginsNgo/web-app-template#readme",
+  "devDependencies": {
+    "del": "^5.1.0",
+    "eslint": "^7.9.0",
+    "gulp": "^4.0.2",
+    "path": "^0.12.7"
+  }
+}
