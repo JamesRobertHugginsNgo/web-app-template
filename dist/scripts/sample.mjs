@@ -1,6 +1,6 @@
 /* global $ */
 
-import { foo } from './module-sample.js';
+import { foo } from './module-sample.mjs';
 
 $(function() {
 	foo('Hello World');
