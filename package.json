@@ -26,7 +26,9 @@
     "gulp-connect": "^5.7.0",
     "gulp-preprocess": "^3.0.3",
     "gulp-rename": "^2.0.0",
+    "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.5",
+    "node-sass": "^4.14.1",
     "path": "^0.12.7"
   },
   "dependencies": {}

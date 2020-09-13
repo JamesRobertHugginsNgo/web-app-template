@@ -1,13 +1,17 @@
 const del = require('del');
 const gulp = require('gulp');
+const nodeSass = require('node-sass');
 const path = require('path');
 
 const gulpAutoprefixer = require('gulp-autoprefixer');
 const gulpCleanCss = require('gulp-clean-css');
 const gulpConnect = require('gulp-connect');
 const gulpPreprocess = require('gulp-preprocess');
+const gulpSass = require('gulp-sass');
 const gulpRename = require('gulp-rename');
 const gulpSourcemaps = require('gulp-sourcemaps');
+
+gulpSass.compiler = nodeSass;
 
 const dist = path.join(__dirname, './dist');
 function delDist() {
@@ -52,10 +56,23 @@ function watchCss() {
 	return Promise.resolve();
 }
 
-const build = gulp.parallel(buildHtml, buildCss);
+const buildSassSrc = path.join(__dirname, './src/**/*.scss');
+function buildSass() {
+	const stream = gulp.src(buildSassSrc, { since: gulp.lastRun(buildSass) })
+		.pipe(gulpPreprocess({ context: preprocessContext }))
+		.pipe(gulpSass().on('error', gulpSass.logError));
+
+	return buildCssCommon(stream, dist);
+}
+function watchSass() {
+	gulp.watch(buildSassSrc, buildSass);
+	return Promise.resolve();
+}
+
+const build = gulp.parallel(buildHtml, buildCss, buildSass);
 module.exports.build = gulp.series(delDist, build);
 
-const watch = gulp.parallel(watchHtml, watchCss);
+const watch = gulp.parallel(watchHtml, watchCss, watchSass);
 module.exports.watch = gulp.series(delDist, build, watch);
 
 function serve() {

@@ -1,0 +1,4 @@
+.sass-parent {
+  color: #000000; }
+  .sass-parent .sass-child {
+    color: #cccccc; }
