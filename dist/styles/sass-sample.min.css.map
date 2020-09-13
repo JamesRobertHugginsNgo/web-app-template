@@ -1,0 +1,1 @@
+{"version":3,"sources":["styles/sass-sample.css"],"names":[],"mappings":"AAAA,aACE,MAAO,KACP,yBACE,MAAO","file":"sass-sample.min.css","sourcesContent":[".sass-parent {\n  color: #000000; }\n  .sass-parent .sass-child {\n    color: #cccccc; }\n"]}
