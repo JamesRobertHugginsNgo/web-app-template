@@ -1,11 +1,9 @@
 /* global $ */
 
-const test = 123; // eslint-disable-line
-
-const fu = (bar) => {
+const foo = (bar) => {
 	console.log(bar); // eslint-disable-line no-console
 };
 
-$(function() {
-	fu('Hello Universe');
+$(() => {
+	foo('Hello World');
 });
