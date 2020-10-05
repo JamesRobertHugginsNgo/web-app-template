@@ -2,7 +2,7 @@
 
 /* global $ */
 
-/* global foo */
+/* global fu */
 $(function () {
-  foo('Hello World');
+  fu('Hello Universe');
 });

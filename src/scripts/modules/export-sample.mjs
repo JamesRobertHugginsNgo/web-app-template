@@ -1,8 +1,8 @@
-const foo = (bar) => {
+const fu = (bar) => {
 	console.log(bar); // eslint-disable-line no-console
 };
 
 /* @exclude */
-/* exported foo */
+export { fu };
 /* @endexclude */
-/* @exec renderExport('foo') */
+/* @exec renderExport('fu') */

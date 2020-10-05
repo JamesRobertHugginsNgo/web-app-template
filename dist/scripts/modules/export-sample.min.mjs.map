@@ -1,0 +1,1 @@
+{"version":3,"sources":["scripts/modules/export-sample.mjs"],"names":["fu","bar","console","log"],"mappings":"AAAA,MAAMA,GAAMC,IACXC,QAAQC,IAAIF,WAGJD","file":"export-sample.min.mjs","sourcesContent":["const fu = (bar) => {\n\tconsole.log(bar); // eslint-disable-line no-console\n};\n\nexport { fu };\n"]}

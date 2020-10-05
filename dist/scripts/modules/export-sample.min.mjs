@@ -1,0 +1,1 @@
+const fu=o=>{console.log(o)};export{fu};
