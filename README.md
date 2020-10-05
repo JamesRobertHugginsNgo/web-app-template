@@ -1,4 +1,4 @@
-# web-app-template v1.1.1
+# web-app-template v2.0.1
 Template for web app development.
 
 ## devDependencies
@@ -21,6 +21,7 @@ Template for web app development.
 	"gulp-sass": "^4.1.0",
 	"gulp-sourcemaps": "^2.6.5",
 	"gulp-uglify": "^3.0.2",
+	"gulp-uglify-es": "^2.0.0",
 	"node-sass": "^4.14.1",
 	"path": "^0.12.7"
 }
