@@ -103,7 +103,7 @@ function buildEs6Helper(stream, dist) {
 function buildEs5Helper(stream, dist) {
 	return stream
 		.pipe(gulpBabel())
-		.pipe(gulpRename(path => path.basename += '.es5'))
+		.pipe(gulpRename(path => path.basename += '.babel'))
 		.pipe(gulp.dest(dist))
 		.pipe(gulpSourcemaps.init())
 		.pipe(gulpUglify())
