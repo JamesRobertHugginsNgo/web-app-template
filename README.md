@@ -4,9 +4,28 @@ A [repository template](https://docs.github.com/en/free-pro-team@latest/github/c
 
 ## Features
 
-- JavaScript Lint
-	- ESLint configuration for NodeJS, ES6 and ES6 Modules
-
+- Editor Config for your editor
+- ESLint to catch JavaScript code errors
+	- NodeJS configuration at the root folder
+	- ES6 configuration at the __src__ folder
+	- ES6 Modules configuration at the __module__ folder
+- GulpJS tasks for automation
+- GulpJS build task moving code from from __src__ folder to __dist__ folder
+	- Moves html files
+	- Build CSS files from Less files
+	- Build CSS files from SASS files
+	- Add prefix to CSS fules in the CSS files
+	- ESLint JavaScript files
+	- Build the compatible version (using Babel) of the JavaScript files
+	- Build the ES6 module JavaScript files
+	- Build the compatible version (using Babel) of the ES6 module JavaScript files
+	- Build the minified version of the CSS and JavaScript files and their corresponding source files
+- GulpJS watch task
+	- Executes build task
+	- Watches for changes and re-run the build task
+- GulpJS serve task
+	- Executes watch task
+	- Starts a local http server for viewing the web application on a web browser
 
 ## Requirment
 
@@ -14,11 +33,38 @@ A [repository template](https://docs.github.com/en/free-pro-team@latest/github/c
 
 ## Getting Started
 
+### 1 - Install Dependencies
+
+Dependecies are defined in the _package.json_ file.
+
+```
+npm install
+```
+
+### 2 - Add New Code
+
+Add code inside the __src__ folder.
+
+### 3a - Build Automation
+
+```
+gulp build
+```
+
+### 3b - Watch Automation
+
+```
+gulp watch
+```
+
+### 3c - Serve Automation
+
+```
+gulp serve
+```
 
 
-
-
-## devDependencies
+## Dev Dependencies
 
 ``` json
 {
