@@ -41,7 +41,7 @@ Dependecies are defined in the _package.json_ file.
 npm install
 ```
 
-### 2 - Add New Code
+### 2 - Add/Remove/Update Code
 
 Add code inside the __src__ folder.
 
