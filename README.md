@@ -14,7 +14,7 @@ A [repository template](https://docs.github.com/en/free-pro-team@latest/github/c
 	- Moves html files
 	- Build CSS files from Less files
 	- Build CSS files from SASS files
-	- Add prefix to CSS fules in the CSS files
+	- Add prefix to CSS rules in the CSS files
 	- ESLint JavaScript files
 	- Build the compatible version (using Babel) of the JavaScript files
 	- Build the ES6 module JavaScript files
