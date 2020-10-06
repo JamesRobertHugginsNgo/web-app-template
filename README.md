@@ -4,7 +4,7 @@ A [repository template](https://docs.github.com/en/free-pro-team@latest/github/c
 
 ## Features
 
-- ESLint for finding problems in JavaScript code
+- JavaScript Lint
 	- ESLint configuration for NodeJS, ES6 and ES6 Modules
 
 
