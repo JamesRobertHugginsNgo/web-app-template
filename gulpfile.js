@@ -13,7 +13,6 @@ const gulpSass = require('gulp-sass');
 const gulpLess = require('gulp-less');
 const gulpRename = require('gulp-rename');
 const gulpSourcemaps = require('gulp-sourcemaps');
-const gulpUglify = require('gulp-uglify');
 const gulpUglifyEs = require('gulp-uglify-es').default;
 
 gulpSass.compiler = nodeSass;
@@ -106,7 +105,7 @@ function buildEs5Helper(stream, dist) {
 		.pipe(gulpRename(path => path.basename += '.babel'))
 		.pipe(gulp.dest(dist))
 		.pipe(gulpSourcemaps.init())
-		.pipe(gulpUglify())
+		.pipe(gulpUglifyEs())
 		.pipe(gulpRename(path => path.basename += '.min'))
 		.pipe(gulpSourcemaps.write('./'))
 		.pipe(gulp.dest(dist))

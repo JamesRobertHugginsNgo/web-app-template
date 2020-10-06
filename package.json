@@ -1,6 +1,6 @@
 {
   "name": "web-app-template",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Template for web app development.",
   "main": "index.js",
   "scripts": {
@@ -36,7 +36,6 @@
     "gulp-rename": "^2.0.0",
     "gulp-sass": "^4.1.0",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-uglify": "^3.0.2",
     "gulp-uglify-es": "^2.0.0",
     "node-sass": "^4.14.1",
     "path": "^0.12.7"
