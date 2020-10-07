@@ -92,6 +92,10 @@ function watchLess() {
 
 function buildEs6Helper(stream, dist) {
 	return stream
+		.pipe(gulpEsLint())
+		.pipe(gulpEsLint.format())
+		.pipe(gulpEsLint.failAfterError())
+		.pipe(gulp.dest(dist))
 		.pipe(gulpSourcemaps.init())
 		.pipe(gulpUglifyEs())
 		.pipe(gulpRename(path => path.basename += '.min'))
@@ -128,11 +132,7 @@ function buildEs6ModuleMain() {
 	const stream = gulp.src(buildEs6ModuleSrc, { since: gulp.lastRun(buildEs6ModuleMain) })
 		.pipe(gulpRename(path => path.extname = '.js'))
 		.pipe(gulpPreprocess({ context: buildEs6ModuleMainPreprocessContext }))
-		.pipe(gulpRename(path => path.extname = '.mjs'))
-		.pipe(gulpEsLint())
-		.pipe(gulpEsLint.format())
-		.pipe(gulpEsLint.failAfterError())
-		.pipe(gulp.dest(dist));
+		.pipe(gulpRename(path => path.extname = '.mjs'));
 
 	return buildEs6Helper(stream, dist);
 }
@@ -166,11 +166,7 @@ function watchEs6Module() {
 const buildEs6Src = path.join(__dirname, './src/**/*.js');
 function buildEs6Main() {
 	const stream = gulp.src(buildEs6Src, { since: gulp.lastRun(buildEs6Main) })
-		.pipe(gulpPreprocess({ context: preprocessContext }))
-		.pipe(gulpEsLint())
-		.pipe(gulpEsLint.format())
-		.pipe(gulpEsLint.failAfterError())
-		.pipe(gulp.dest(dist));
+		.pipe(gulpPreprocess({ context: preprocessContext }));
 
 	return buildEs6Helper(stream, dist);
 }
