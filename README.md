@@ -1,4 +1,4 @@
-# web-app-template v2.2.2
+# web-app-template v2.3.0
 
 A [repository template](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) for quickly starting web app projects.
 
