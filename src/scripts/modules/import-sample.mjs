@@ -6,5 +6,5 @@ import { fu } from './export-sample.mjs';
 /* @exec renderImport('fu', './export-sample.mjs') */
 
 $(() => {
-	fu('Hello Universe');
+	fu('Universe');
 });

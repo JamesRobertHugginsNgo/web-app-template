@@ -4,5 +4,6 @@
 
 /* global fu */
 $(function () {
-  fu('Hello Universe');
+  fu('Universe');
+  console.log(prefix); // eslint-disable-line
 });
