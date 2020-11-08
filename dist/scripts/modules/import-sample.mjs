@@ -3,5 +3,7 @@
 import { fu } from './export-sample.mjs';
 
 $(() => {
-	fu('Hello Universe');
+	fu('Universe');
+
+	console.log(prefix); // eslint-disable-line
 });
